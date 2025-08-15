@@ -1,0 +1,25 @@
+{
+  "Common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "retry": "Tekrar Dene",
+    "backHome": "Ana Sayfaya Dön",
+    "pageNotFound": "Sayfa Bulunamadı",
+    "pageNotFoundDescription": "Aradığınız sayfa mevcut değil veya taşınmış olabilir."
+  },
+  "HomePage": {
+    "title": "Zamansız Zarafet, Gelenekle Dokunmuş",
+    "description": "Fars halılarının sanatını keşfedin — tarihle işlenmiş, eviniz için tasarlanmış.",
+    "shopNow": "Hemen Alışveriş Yap",
+    "exploreCollections": "Koleksiyonları Keşfet",
+    "premiumQuality": "Premium Kalite",
+    "handmade": "100% El Yapımı",
+    "expressShipping": "Hızlı Kargo"
+  },
+  "Navigation": {
+    "shop": "Mağaza",
+    "bestsellers": "Çok Satanlar",
+    "gallery": "Galeri",
+    "about": "Hakkımızda"
+  }
+}
