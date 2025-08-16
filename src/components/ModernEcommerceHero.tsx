@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import React, { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import SafeImage from "./SafeImage";
 
 // Fake Store API Product Type
 interface Product {
@@ -260,9 +261,10 @@ const ModernEcommerceHero: React.FC = () => {
                 {featuredProduct ? (
                   <div className="space-y-6">
                     <div className="relative h-64 bg-gray-50 rounded-xl overflow-hidden">
-                      <Image
+                      <SafeImage
                         src={featuredProduct.image}
                         alt={featuredProduct.title}
+                        category={featuredProduct.category}
                         fill
                         className="object-contain p-4"
                         sizes="(max-width: 768px) 100vw, 50vw"

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight } from "@deemlol/next-icons";
 import { useTranslations } from "next-intl";
+import SafeImage from "./SafeImage";
 
 // Fake Store API Product Type
 interface Product {
@@ -226,11 +227,13 @@ const BestSellers: React.FC = () => {
               onClick={() => handleProductClick(product.id)}
             >
               <div className="relative h-64 bg-gray-100">
-                <img
-                  src={getSafeImageSrc(product)}
+                <SafeImage
+                  src={product.image}
                   alt={product.title}
+                  category={product.category}
                   className="w-full h-full object-contain p-4"
-                  loading="lazy"
+                  width={400}
+                  height={400}
                 />
               </div>
 
