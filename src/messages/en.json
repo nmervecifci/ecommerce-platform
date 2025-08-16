@@ -1,25 +1,57 @@
 {
   "Common": {
     "loading": "Loading...",
-    "error": "An error occurred",
-    "retry": "Try Again",
     "backHome": "Back to Home",
     "pageNotFound": "Page Not Found",
-    "pageNotFoundDescription": "The page you're looking for doesn't exist or may have been moved."
-  },
-  "HomePage": {
-    "title": "Timeless Elegance, Woven in Tradition",
-    "description": "Discover the artistry of Persian rugs — crafted with history, designed for your home.",
-    "shopNow": "Shop Now",
-    "exploreCollections": "Explore Collections",
-    "premiumQuality": "Premium Quality",
-    "handmade": "100% Handmade",
-    "expressShipping": "Express Shipping"
+    "error": "Error",
+    "success": "Success"
   },
   "Navigation": {
     "shop": "Shop",
-    "bestsellers": "Bestsellers",
-    "gallery": "Gallery",
+    "bestsellers": "Best Sellers",
+    "categories": "Categories",
     "about": "About"
+  },
+  "HomePage": {
+    "title": "Modern Shopping Experience",
+    "description": "Discover the highest quality products at the best prices. With secure payment, fast delivery and excellent customer service.",
+    "shopNow": "Shop Now",
+    "exploreCollections": "Explore Collections",
+    "premiumQuality": "Premium Quality",
+    "securePayment": "Secure Payment",
+    "fastShipping": "Fast Shipping",
+    "featuredProduct": "Featured Product",
+    "buyNow": "Buy Now",
+    "loadingProduct": "Loading product..."
+  },
+  "BestSellers": {
+    "sectionTitle": "Featured",
+    "highlight": "Products",
+    "loading": "Loading products...",
+    "addToCart": "Add to Cart"
+  },
+  "ProductDetail": {
+    "loading": "Loading product...",
+    "productNotFound": "Product not found",
+    "goBack": "Go Back",
+    "backToProducts": "Back to Products",
+    "productDetails": "Product Details",
+    "reviews": "reviews",
+    "off": "off",
+    "description": "Description",
+    "specifications": "Product Specifications",
+    "productId": "Product ID",
+    "category": "Category",
+    "availability": "Availability",
+    "customerRating": "Customer Rating",
+    "size": "Size",
+    "inStock": "In Stock",
+    "items": "items",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "freeShipping": "Free Shipping",
+    "securePayment": "Secure Payment",
+    "easyReturns": "Easy Returns",
+    "support247": "24/7 Support"
   }
 }

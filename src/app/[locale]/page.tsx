@@ -1,5 +1,11 @@
-import CarpetBackground from "@/components/CarpetBackground";
+import BestSellers from "@/components/BestSellers";
+import ModernEcommerceHero from "@/components/ModernEcommerceHero";
 
 export default function HomePage() {
-  return <CarpetBackground />;
+  return (
+    <div>
+      <ModernEcommerceHero />
+      <BestSellers />
+    </div>
+  );
 }

@@ -1,25 +1,57 @@
 {
   "Common": {
     "loading": "Yükleniyor...",
-    "error": "Bir hata oluştu",
-    "retry": "Tekrar Dene",
     "backHome": "Ana Sayfaya Dön",
     "pageNotFound": "Sayfa Bulunamadı",
-    "pageNotFoundDescription": "Aradığınız sayfa mevcut değil veya taşınmış olabilir."
-  },
-  "HomePage": {
-    "title": "Zamansız Zarafet, Gelenekle Dokunmuş",
-    "description": "Fars halılarının sanatını keşfedin — tarihle işlenmiş, eviniz için tasarlanmış.",
-    "shopNow": "Hemen Alışveriş Yap",
-    "exploreCollections": "Koleksiyonları Keşfet",
-    "premiumQuality": "Premium Kalite",
-    "handmade": "100% El Yapımı",
-    "expressShipping": "Hızlı Kargo"
+    "error": "Hata",
+    "success": "Başarılı"
   },
   "Navigation": {
     "shop": "Mağaza",
     "bestsellers": "Çok Satanlar",
-    "gallery": "Galeri",
+    "categories": "Kategoriler",
     "about": "Hakkımızda"
+  },
+  "HomePage": {
+    "title": "Modern Alışveriş Deneyimi",
+    "description": "En kaliteli ürünleri en uygun fiyatlarla keşfedin. Güvenli ödeme, hızlı teslimat ve mükemmel müşteri hizmeti ile.",
+    "shopNow": "Hemen Alışveriş Yap",
+    "exploreCollections": "Koleksiyonları Keşfet",
+    "premiumQuality": "Premium Kalite",
+    "securePayment": "Güvenli Ödeme",
+    "fastShipping": "Hızlı Teslimat",
+    "featuredProduct": "Öne Çıkan Ürün",
+    "buyNow": "Hemen Al",
+    "loadingProduct": "Ürün yükleniyor..."
+  },
+  "BestSellers": {
+    "sectionTitle": "Öne Çıkan",
+    "highlight": "Ürünler",
+    "loading": "Ürünler yükleniyor...",
+    "addToCart": "Sepete Ekle"
+  },
+  "ProductDetail": {
+    "loading": "Ürün yükleniyor...",
+    "productNotFound": "Ürün bulunamadı",
+    "goBack": "Geri Dön",
+    "backToProducts": "Ürünlere Dön",
+    "productDetails": "Ürün Detayları",
+    "reviews": "değerlendirme",
+    "off": "indirim",
+    "description": "Açıklama",
+    "specifications": "Ürün Özellikleri",
+    "productId": "Ürün ID",
+    "category": "Kategori",
+    "availability": "Stok Durumu",
+    "customerRating": "Müşteri Puanı",
+    "size": "Beden",
+    "inStock": "Stokta Var",
+    "items": "adet",
+    "addToCart": "Sepete Ekle",
+    "buyNow": "Hemen Al",
+    "freeShipping": "Ücretsiz Kargo",
+    "securePayment": "Güvenli Ödeme",
+    "easyReturns": "Kolay İade",
+    "support247": "7/24 Destek"
   }
 }
