@@ -9,8 +9,7 @@
   "Navigation": {
     "shop": "Shop",
     "bestsellers": "Best Sellers",
-    "categories": "Categories",
-    "about": "About"
+    "products": "Products"
   },
   "HomePage": {
     "title": "Modern Shopping Experience",
@@ -53,5 +52,41 @@
     "securePayment": "Secure Payment",
     "easyReturns": "Easy Returns",
     "support247": "24/7 Support"
+  },
+  "products": {
+    "title": "Products",
+    "loading": "Loading products...",
+    "error": "Error: ",
+    "tryAgain": "Try Again",
+    "noProducts": "No products found matching your criteria.",
+    "productsFound": "products found",
+    "addToCart": "Add to Cart"
+  },
+  "filters": {
+    "category": "Category",
+    "allCategories": "All Categories",
+    "priceRange": "Price Range",
+    "sort": "Sort By",
+    "minPrice": "Min",
+    "maxPrice": "Max"
+  },
+  "sorting": {
+    "nameAsc": "Name (A-Z)",
+    "nameDesc": "Name (Z-A)",
+    "priceAsc": "Price (Low to High)",
+    "priceDesc": "Price (High to Low)"
+  },
+  "categories": {
+    "electronics": "Electronics",
+    "jewelery": "Jewelery",
+    "mens_clothing": "Men's Clothing",
+    "womens_clothing": "Women's Clothing"
+  },
+  "common": {
+    "reviews": "reviews"
+  },
+  "currency": {
+    "symbol": "$",
+    "code": "USD"
   }
 }

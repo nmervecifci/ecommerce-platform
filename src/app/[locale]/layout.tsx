@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { routing, isValidLocale } from "../../i18n/routing";
 import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "../../i18n/routing";
+import { StoreProvider } from "@/store/providers";
 
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
@@ -39,10 +40,11 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={playfairDisplay.variable}>
       <body className="min-h-screen bg-gray-50">
-        <NextIntlClientProvider messages={messages} locale={locale}>
-          {/* CarpetBackground kaldırıldı */}
-          {children}
-        </NextIntlClientProvider>
+        <StoreProvider>
+          <NextIntlClientProvider messages={messages} locale={locale}>
+            {children}
+          </NextIntlClientProvider>
+        </StoreProvider>
       </body>
     </html>
   );

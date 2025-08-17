@@ -9,8 +9,7 @@
   "Navigation": {
     "shop": "Mağaza",
     "bestsellers": "Çok Satanlar",
-    "categories": "Kategoriler",
-    "about": "Hakkımızda"
+    "products": "Ürünler"
   },
   "HomePage": {
     "title": "Modern Alışveriş Deneyimi",
@@ -53,5 +52,41 @@
     "securePayment": "Güvenli Ödeme",
     "easyReturns": "Kolay İade",
     "support247": "7/24 Destek"
+  },
+  "products": {
+    "title": "Ürünler",
+    "loading": "Ürünler yükleniyor...",
+    "error": "Hata: ",
+    "tryAgain": "Tekrar Dene",
+    "noProducts": "Seçtiğiniz kriterlere uygun ürün bulunamadı.",
+    "productsFound": "ürün bulundu",
+    "addToCart": "Sepete Ekle"
+  },
+  "filters": {
+    "category": "Kategori",
+    "allCategories": "Tüm Kategoriler",
+    "priceRange": "Fiyat Aralığı",
+    "sort": "Sırala",
+    "minPrice": "Min",
+    "maxPrice": "Max"
+  },
+  "sorting": {
+    "nameAsc": "İsim (A-Z)",
+    "nameDesc": "İsim (Z-A)",
+    "priceAsc": "Fiyat (Artan)",
+    "priceDesc": "Fiyat (Azalan)"
+  },
+  "categories": {
+    "electronics": "Elektronik",
+    "jewelery": "Mücevher",
+    "mens_clothing": "Erkek Giyim",
+    "womens_clothing": "Kadın Giyim"
+  },
+  "common": {
+    "reviews": "değerlendirme"
+  },
+  "currency": {
+    "symbol": "₺",
+    "code": "TRY"
   }
 }

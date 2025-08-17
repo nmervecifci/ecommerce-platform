@@ -1,11 +1,12 @@
-import BestSellers from "@/components/BestSellers";
+import FeaturedProducts from "@/components/Featured Products";
 import ModernEcommerceHero from "@/components/ModernEcommerceHero";
 
 export default function HomePage() {
   return (
     <div>
       <ModernEcommerceHero />
-      <BestSellers />
+
+      <FeaturedProducts />
     </div>
   );
 }

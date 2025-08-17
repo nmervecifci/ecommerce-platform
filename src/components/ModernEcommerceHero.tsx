@@ -1,9 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import React, { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, loadCart } from "@/store/cartSlice";
+import { RootState } from "@/store/store";
 import SafeImage from "./SafeImage";
 
 // Fake Store API Product Type
@@ -23,9 +25,57 @@ interface Product {
 const ModernEcommerceHero: React.FC = () => {
   const locale = useLocale();
   const t = useTranslations();
+  const dispatch = useDispatch();
+
+  // Redux store'dan cart quantity'yi al
+  const cartQuantity = useSelector((state: RootState) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0)
+  );
+
   const [featuredProduct, setFeaturedProduct] = useState<Product | null>(null);
 
   const isEnglish = locale === "en";
+
+  // Component mount olduğunda localStorage'dan cart'ı yükle
+  useEffect(() => {
+    dispatch(loadCart());
+  }, [dispatch]);
+
+  const handleBestSellersClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    setTimeout(() => {
+      const element = document.getElementById("featured");
+      if (element) {
+        const elementTop = element.offsetTop - 100;
+        window.scrollTo({
+          top: elementTop,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+  };
+
+  const handleAddToCart = (product: Product): void => {
+    console.log("🛒 Hero - Adding featured product to cart:", product.title);
+
+    // Redux store'a ürün ekle
+    dispatch(
+      addToCart({
+        id: product.id,
+        title: product.title,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+      })
+    );
+
+    alert(`${product.title} sepete eklendi!`);
+  };
+
+  const handleCartClick = (): void => {
+    window.location.href = "/cart";
+  };
 
   useEffect(() => {
     const fetchFeaturedProduct = async () => {
@@ -83,28 +133,23 @@ const ModernEcommerceHero: React.FC = () => {
               {t("Navigation.shop")}
             </Link>
             <Link
-              href="/bestsellers"
+              href="/#featured"
+              onClick={handleBestSellersClick}
               className="hover:text-blue-600 transition-colors"
             >
               {t("Navigation.bestsellers")}
             </Link>
             <Link
-              href="/categories"
+              href="/products"
               className="hover:text-blue-600 transition-colors"
             >
-              {t("Navigation.categories")}
-            </Link>
-            <Link
-              href="/about"
-              className="hover:text-blue-600 transition-colors"
-            >
-              {t("Navigation.about")}
+              {t("Navigation.products")}
             </Link>
           </div>
 
           {/* Center - Logo/Title */}
           <div className="absolute left-1/2 transform -translate-x-1/2">
-            <h1 className="text-gray-900 text-4xl font-bold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
               ModernStore
             </h1>
           </div>
@@ -155,7 +200,12 @@ const ModernEcommerceHero: React.FC = () => {
                   />
                 </svg>
               </div>
-              <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+
+              {/* Cart Icon with Badge */}
+              <div
+                className="relative w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+                onClick={handleCartClick}
+              >
                 <svg
                   className="w-5 h-5 text-gray-600"
                   fill="currentColor"
@@ -163,6 +213,11 @@ const ModernEcommerceHero: React.FC = () => {
                 >
                   <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
                 </svg>
+                {cartQuantity > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                    {cartQuantity}
+                  </span>
+                )}
               </div>
             </div>
           </div>
@@ -187,10 +242,16 @@ const ModernEcommerceHero: React.FC = () => {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg">
+                <button
+                  onClick={() => (window.location.href = "/products")}
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+                >
                   {t("HomePage.shopNow")}
                 </button>
-                <button className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all">
+                <button
+                  onClick={handleBestSellersClick}
+                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all"
+                >
                   {t("HomePage.exploreCollections")}
                 </button>
               </div>
@@ -285,7 +346,10 @@ const ModernEcommerceHero: React.FC = () => {
                         <span className="text-2xl font-bold text-blue-600">
                           ${featuredProduct.price}
                         </span>
-                        <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all">
+                        <button
+                          onClick={() => handleAddToCart(featuredProduct)}
+                          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                        >
                           {t("HomePage.buyNow")}
                         </button>
                       </div>
