@@ -41,9 +41,26 @@ const ModernEcommerceHero: React.FC = () => {
     dispatch(loadCart());
   }, [dispatch]);
 
-  const handleBestSellersClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  // Link için handler (MouseEvent<HTMLAnchorElement>)
+  const handleBestSellersLinkClick = (
+    e: React.MouseEvent<HTMLAnchorElement>
+  ) => {
     e.preventDefault();
 
+    setTimeout(() => {
+      const element = document.getElementById("featured");
+      if (element) {
+        const elementTop = element.offsetTop - 100;
+        window.scrollTo({
+          top: elementTop,
+          behavior: "smooth",
+        });
+      }
+    }, 100);
+  };
+
+  // Button için handler (MouseEvent<HTMLButtonElement>)
+  const handleBestSellersButtonClick = () => {
     setTimeout(() => {
       const element = document.getElementById("featured");
       if (element) {
@@ -134,7 +151,7 @@ const ModernEcommerceHero: React.FC = () => {
             </Link>
             <Link
               href="/#featured"
-              onClick={handleBestSellersClick}
+              onClick={handleBestSellersLinkClick}
               className="hover:text-blue-600 transition-colors"
             >
               {t("Navigation.bestsellers")}
@@ -249,7 +266,7 @@ const ModernEcommerceHero: React.FC = () => {
                   {t("HomePage.shopNow")}
                 </button>
                 <button
-                  onClick={handleBestSellersClick}
+                  onClick={handleBestSellersButtonClick}
                   className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all"
                 >
                   {t("HomePage.exploreCollections")}
