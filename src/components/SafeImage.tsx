@@ -106,9 +106,22 @@ export default function SafeImage({
     "51Y5NI-I5jL._AC_UX679_.jpg",
   ];
 
-  const isBroken = brokenPatterns.some((pattern) => src.includes(pattern));
-  const finalSrc =
-    error || isBroken || !src ? getPlaceholderImage(category) : src;
+  // Sadece kesin bilinen bozuk pattern'ler
+  const knownBrokenPatterns = [
+    "71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    "61IBBVJvSDL._AC_SY879_.jpg",
+    "81fPKd-2AYL._AC_SL1500_.jpg",
+    "51Y5NI-I5jL._AC_UX679_.jpg",
+  ];
+
+  const isKnownBroken = knownBrokenPatterns.some((pattern) =>
+    src.includes(pattern)
+  );
+
+  // İlk başta sadece kesin bozuk olanları placeholder'a çevir
+  // Diğerleri için onError event'ini bekle
+  const shouldUsePlaceholder = error || isKnownBroken || !src;
+  const finalSrc = shouldUsePlaceholder ? getPlaceholderImage(category) : src;
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -117,9 +130,12 @@ export default function SafeImage({
 
   const handleImageError = () => {
     console.warn(`Image failed to load: ${src}`);
-    setError(true);
-    setIsLoading(false);
-    onError?.();
+    // Önce gerçek resmi dene, 404 alırsa placeholder göster
+    if (!error && src.includes("fakestoreapi.com")) {
+      setError(true);
+      setIsLoading(false);
+      onError?.();
+    }
   };
 
   // Performance optimization: Use eager loading for priority images
