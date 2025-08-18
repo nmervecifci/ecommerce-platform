@@ -383,8 +383,8 @@ npm run start
 ### Performance Test URL'leri
 
 **PageSpeed Insights:**
-- [Ana Sayfa Test](https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com/)
-- [Products Sayfa Test](https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com-products/)
+- [Ana Sayfa Test]([https-shopzone-ecommerce-onrender-com/xmg1v7rond?form_factor=desktop](https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com/xmg1v7rond?form_factor=desktop))
+- [Products Sayfa Test]([https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com-products/](https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com-products/zpmbgmg6da?form_factor=desktop))
 
 ## 🔧 Bilinen Sorunlar
 
@@ -444,10 +444,10 @@ npm run start
 
 ## 📞 İletişim
 
-**Developer:** [Your Name]
-**Email:** [your.email@domain.com]
-**LinkedIn:** [Your LinkedIn Profile]
-**GitHub:** [Your GitHub Profile]
+**Developer:** Merve Nur Çifci
+**Email:** mervenurcfc42@gmail.com
+**LinkedIn:** www.linkedin.com/in/mervenurcifci
+**GitHub:** https://github.com/nmervecifci
 
 ## 📄 Lisans
 
