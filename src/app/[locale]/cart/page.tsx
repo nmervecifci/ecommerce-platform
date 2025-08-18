@@ -10,7 +10,7 @@ import {
   loadCart,
 } from "@/store/cartSlice";
 import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 // Product interface tanımı
 interface CartItem {
@@ -186,16 +186,14 @@ export default function CartPage() {
                 >
                   {/* Ürün Resmi */}
                   <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                    <Image
-                      src={getImageSrc(item)}
+                    <SafeImage
+                      src={item.image}
                       alt={item.title}
+                      category={item.category}
                       width={96}
                       height={96}
                       className="w-full h-full object-contain p-2"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = getImageSrc(item);
-                      }}
+                      loading="eager" // ← Cart'ta hızlı yüklensin
                     />
                   </div>
 

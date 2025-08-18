@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/cartSlice";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 // Product type tanımı
 interface Product {
@@ -268,17 +268,13 @@ export default function ProductsPageClient({ products, categories }: Props) {
             >
               {/* Ürün Resmi */}
               <div className="aspect-square relative bg-white p-4">
-                <Image
-                  src={getImageSrc(product)}
+                <SafeImage
+                  src={product.image}
                   alt={product.title}
-                  width={300}
-                  height={300}
-                  className="w-full h-full object-contain"
+                  category={product.category}
+                  fill
+                  className="object-contain"
                   loading="lazy"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = `https://via.placeholder.com/300x300/6b7280/ffffff?text=No+Image`;
-                  }}
                 />
               </div>
 

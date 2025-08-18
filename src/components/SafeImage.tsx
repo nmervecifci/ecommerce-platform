@@ -56,7 +56,12 @@ const getPlaceholderImage = (category?: string) => {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 };
 
-// Ortak SafeImage component
+// Default blur placeholder for better UX
+const getBlurDataURL = () => {
+  return "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+IRjBDMn//2Q==";
+};
+
+// SafeImage component interface
 interface SafeImageProps {
   src: string;
   alt: string;
@@ -66,20 +71,34 @@ interface SafeImageProps {
   width?: number;
   height?: number;
   sizes?: string;
+  priority?: boolean;
+  loading?: "lazy" | "eager";
+  quality?: number;
+  placeholder?: "blur" | "empty";
+  onLoad?: () => void;
+  onError?: () => void;
 }
 
 export default function SafeImage({
   src,
   alt,
   category,
-  className,
-  fill,
-  width,
-  height,
-  sizes,
+  className = "",
+  fill = false,
+  width = 400,
+  height = 400,
+  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+  priority = false,
+  loading = "lazy",
+  quality = 85,
+  placeholder = "blur",
+  onLoad,
+  onError,
 }: SafeImageProps) {
   const [error, setError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
+  // Broken image patterns
   const brokenPatterns = [
     "71kWymZ+c+L._AC_SX679_",
     "71pWzhdJNwL._AC_UL640_QL65_ML3_",
@@ -94,19 +113,69 @@ export default function SafeImage({
   ];
 
   const isBroken = brokenPatterns.some((pattern) => src.includes(pattern));
+  const finalSrc =
+    error || isBroken || !src ? getPlaceholderImage(category) : src;
 
-  const finalSrc = error || isBroken ? getPlaceholderImage(category) : src;
+  const handleImageLoad = () => {
+    setIsLoading(false);
+    onLoad?.();
+  };
+
+  const handleImageError = () => {
+    console.warn(`Image failed to load: ${src}`);
+    setError(true);
+    setIsLoading(false);
+    onError?.();
+  };
+
+  // Performance optimization: Use eager loading for priority images
+  const optimizedLoading = priority ? "eager" : loading;
+
+  const imageProps = {
+    src: finalSrc,
+    alt: alt || "Product image",
+    className: `transition-opacity duration-300 ${
+      isLoading ? "opacity-0" : "opacity-100"
+    } ${className}`,
+    sizes,
+    priority,
+    loading: optimizedLoading,
+    quality,
+    placeholder: placeholder,
+    blurDataURL: getBlurDataURL(),
+    onLoad: handleImageLoad,
+    onError: handleImageError,
+  };
+
+  if (fill) {
+    return (
+      <div className="relative overflow-hidden">
+        <Image {...imageProps} fill alt={alt || "Product image"} />
+        {isLoading && (
+          <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
-    <Image
-      src={finalSrc}
-      alt={alt}
-      className={className}
-      fill={fill}
-      width={fill ? undefined : width}
-      height={fill ? undefined : height}
-      sizes={sizes}
-      onError={() => setError(true)}
-    />
+    <div className="relative">
+      <Image
+        {...imageProps}
+        width={width}
+        height={height}
+        alt={alt || "Product image"}
+      />
+      {isLoading && (
+        <div
+          className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center"
+          style={{ width, height }}
+        >
+          <div className="w-6 h-6 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+        </div>
+      )}
+    </div>
   );
 }

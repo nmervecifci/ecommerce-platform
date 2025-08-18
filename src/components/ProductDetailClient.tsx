@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/cartSlice";
 import { ArrowLeft, Star, ShoppingCart, Heart } from "lucide-react";
-import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 
 // Product interface
 interface Product {
@@ -29,7 +29,6 @@ interface Props {
 export default function ProductDetailClient({
   product,
   similarProducts,
-  locale,
 }: Props) {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
@@ -168,17 +167,14 @@ export default function ProductDetailClient({
           {/* Product Images */}
           <div className="space-y-4">
             <div className="relative aspect-square bg-white rounded-2xl shadow-lg overflow-hidden">
-              <Image
-                src={getImageSrc(product)}
+              <SafeImage
+                src={product.image}
                 alt={product.title}
+                category={product.category}
                 fill
                 className="object-contain p-8"
                 sizes="(max-width: 768px) 100vw, 50vw"
                 priority
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = getImageSrc(product);
-                }}
               />
 
               {/* Wishlist Button */}
@@ -424,12 +420,14 @@ export default function ProductDetailClient({
                   onClick={() => handleSimilarProductClick(similarProduct.id)}
                 >
                   <div className="aspect-square relative bg-gray-50">
-                    <Image
-                      src={getImageSrc(similarProduct)}
+                    <SafeImage
+                      src={similarProduct.image}
                       alt={similarProduct.title}
+                      category={similarProduct.category}
                       fill
                       className="object-contain p-4"
                       sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                      loading="lazy"
                     />
                   </div>
                   <div className="p-4">
