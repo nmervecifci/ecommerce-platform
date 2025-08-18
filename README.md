@@ -385,7 +385,7 @@ npm run start
 **PageSpeed Insights:**
 - [Ana Sayfa Test](https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com/xmg1v7rond?form_factor=desktop)
 - [Products Sayfa Test](https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com-products/zpmbgmg6da?form_factor=desktop)
-
+- [Product Detay Sayfa Test](https://pagespeed.web.dev/analysis/https-shopzone-ecommerce-onrender-com-products-id/[test-id]?form_factor=desktop)
 ## 🔧 Bilinen Sorunlar
 
 ### 1. Fake Store API Image Issues
