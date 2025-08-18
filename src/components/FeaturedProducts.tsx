@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTranslations } from "next-intl";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/cartSlice";
@@ -20,54 +20,13 @@ interface Product {
   };
 }
 
-const FeaturedProducts: React.FC = () => {
+interface Props {
+  products: Product[];
+}
+
+const FeaturedProducts: React.FC<Props> = ({ products }) => {
   const t = useTranslations("BestSellers");
   const dispatch = useDispatch();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        // Farklı kategorilerden ürünler çekelim
-        const categories = [
-          "electronics",
-          "men's clothing",
-          "women's clothing",
-          "jewelery",
-        ];
-        const promises = categories.map(
-          (category) =>
-            fetch(
-              `https://fakestoreapi.com/products/category/${category}?limit=1`
-            )
-              .then((res) => res.json())
-              .then((data) => data[0]) // Her kategoriden 1 ürün
-        );
-
-        const categoryProducts = await Promise.all(promises);
-        const validProducts = categoryProducts.filter((product) => product); // null olanları filtrele
-
-        setProducts(validProducts);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        // Fallback: İlk 4 ürünü çek
-        try {
-          const response = await fetch(
-            "https://fakestoreapi.com/products?limit=4"
-          );
-          const data = await response.json();
-          setProducts(data);
-        } catch (fallbackError) {
-          console.error("Fallback fetch also failed:", fallbackError);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
 
   const handleProductClick = (productId: number): void => {
     // Router kullanarak ürün detay sayfasına yönlendir
@@ -93,18 +52,6 @@ const FeaturedProducts: React.FC = () => {
     // Kullanıcıya görsel feedback
     alert(`${product.title} sepete eklendi!`);
   };
-
-  if (loading) {
-    return (
-      <section id="featured" className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-center h-96">
-            <div className="text-lg text-gray-600">{t("loading")}</div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="featured" className="py-20 bg-gray-50">

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import "../globals.css";
 import { Playfair_Display } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
@@ -7,7 +8,48 @@ import { routing, isValidLocale } from "../../i18n/routing";
 import { setRequestLocale } from "next-intl/server";
 import type { Locale } from "../../i18n/routing";
 import { StoreProvider } from "@/store/providers";
-
+export const metadata: Metadata = {
+  title: {
+    default: "ShopZone - Online Alışveriş",
+    template: "%s | ShopZone",
+  },
+  description:
+    "Kaliteli ürünlerle dolu online alışveriş platformu. Elektronik, giyim, aksesuar ve daha fazlası uygun fiyatlarla.",
+  keywords: [
+    "online alışveriş",
+    "e-ticaret",
+    "elektronik",
+    "giyim",
+    "aksesuar",
+  ],
+  authors: [{ name: "ShopZone" }],
+  creator: "ShopZone",
+  metadataBase: new URL("https://shopzone-demo.vercel.app"), // Deploy sonrası gerçek URL olacak
+  openGraph: {
+    type: "website",
+    locale: "tr_TR",
+    url: "https://shopzone-demo.vercel.app",
+    title: "ShopZone - Online Alışveriş Platformu",
+    description: "Kaliteli ürünlerle online alışveriş deneyimi",
+    siteName: "ShopZone",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ShopZone - Online Alışveriş",
+    description: "Kaliteli ürünlerle online alışveriş platformu",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+};
 const playfairDisplay = Playfair_Display({
   subsets: ["latin"],
   style: ["normal", "italic"],
