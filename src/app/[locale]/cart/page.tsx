@@ -10,6 +10,17 @@ import {
   loadCart,
 } from "@/store/cartSlice";
 import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import Image from "next/image";
+
+// Product interface tanımı
+interface CartItem {
+  id: number;
+  title: string;
+  price: number;
+  image: string;
+  category: string;
+  quantity: number;
+}
 
 export default function CartPage() {
   const dispatch = useDispatch();
@@ -65,12 +76,10 @@ export default function CartPage() {
         2
       )} ödeme yapılacak.\n\nÖdeme sayfasına yönlendirileceksiniz.`
     );
-
-  
   };
 
-  // Placeholder image function
-  const getImageSrc = (item: any) => {
+  // Placeholder image function - 'any' yerine CartItem kullan
+  const getImageSrc = (item: CartItem) => {
     const brokenPatterns = [
       "71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
       "61IBBVJvSDL._AC_SY879_.jpg",
@@ -177,9 +186,11 @@ export default function CartPage() {
                 >
                   {/* Ürün Resmi */}
                   <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                    <img
+                    <Image
                       src={getImageSrc(item)}
                       alt={item.title}
+                      width={96}
+                      height={96}
                       className="w-full h-full object-contain p-2"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;

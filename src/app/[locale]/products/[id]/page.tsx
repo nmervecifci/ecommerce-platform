@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect, useState, use } from "react";
-import { useTranslations } from "next-intl";
+
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/cartSlice";
 import { ArrowLeft, Star, ShoppingCart, Heart } from "lucide-react";
+import Image from "next/image";
 
 // Fake Store API Product Type
 interface Product {
@@ -28,7 +29,7 @@ interface ProductDetailPageProps {
 }
 
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
-  const t = useTranslations("ProductDetail");
+  // const t = useTranslations("ProductDetail");
   const dispatch = useDispatch();
   const resolvedParams = use(params);
   const [product, setProduct] = useState<Product | null>(null);
@@ -217,9 +218,11 @@ export default function ProductDetailPage({ params }: ProductDetailPageProps) {
           {/* Product Images */}
           <div className="space-y-4">
             <div className="relative aspect-square bg-white rounded-2xl shadow-lg overflow-hidden">
-              <img
+              <Image
                 src={getImageSrc(product)}
                 alt={product.title}
+                width={300}
+                height={300}
                 className="w-full h-full object-contain p-8"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;

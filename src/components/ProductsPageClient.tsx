@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/store/cartSlice";
+import Image from "next/image";
 
 // Product type tanımı
 interface Product {
@@ -37,12 +38,8 @@ export default function ProductsPageClient({ products, categories }: Props) {
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [sortBy, setSortBy] = useState<SortOption>("name-asc");
 
-  // next-intl hooks
-  const t = useTranslations("products");
-  const tFilters = useTranslations("filters");
-  const tSorting = useTranslations("sorting");
+  // next-intl hooks - sadece kullanılanları bırak
   const tCategories = useTranslations("categories");
-  const tCommon = useTranslations("common");
   const locale = useLocale();
 
   // İlk yükleme için fiyat aralığını ayarla
@@ -147,14 +144,6 @@ export default function ProductsPageClient({ products, categories }: Props) {
     setFilteredProducts(filtered);
   }, [products, selectedCategory, priceRange, sortBy]);
 
-  // Fiyat formatı
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(locale === "tr" ? "tr-TR" : "en-US", {
-      style: "currency",
-      currency: locale === "tr" ? "TRY" : "USD",
-    }).format(price);
-  };
-
   // Kategori adını çevir
   const translateCategory = (category: string) => {
     const categoryMap: { [key: string]: string } = {
@@ -169,6 +158,7 @@ export default function ProductsPageClient({ products, categories }: Props) {
       try {
         return tCategories(mappedKey);
       } catch (error) {
+        console.error("Translation error:", error);
         return category;
       }
     }
@@ -278,9 +268,11 @@ export default function ProductsPageClient({ products, categories }: Props) {
             >
               {/* Ürün Resmi */}
               <div className="aspect-square relative bg-white p-4">
-                <img
+                <Image
                   src={getImageSrc(product)}
                   alt={product.title}
+                  width={300}
+                  height={300}
                   className="w-full h-full object-contain"
                   loading="lazy"
                   onError={(e) => {
