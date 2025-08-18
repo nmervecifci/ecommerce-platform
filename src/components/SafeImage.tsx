@@ -98,18 +98,12 @@ export default function SafeImage({
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Broken image patterns
+  // Broken image patterns - sadece kesin bozuk olanlar
   const brokenPatterns = [
-    "71kWymZ+c+L._AC_SX679_",
-    "71pWzhdJNwL._AC_UL640_QL65_ML3_",
-    "61IBBVJvSDL._AC_SY879_",
-    "81fPKd-2AYL._AC_SL1500_",
-    "51Y5NI-I5jL._AC_UX679_",
-    "._AC_SX679_",
-    "._AC_UL640_",
-    "._AC_SY879_",
-    "._AC_SL1500_",
-    "._AC_UX679_",
+    "71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
+    "61IBBVJvSDL._AC_SY879_.jpg",
+    "81fPKd-2AYL._AC_SL1500_.jpg",
+    "51Y5NI-I5jL._AC_UX679_.jpg",
   ];
 
   const isBroken = brokenPatterns.some((pattern) => src.includes(pattern));
