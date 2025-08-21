@@ -33,6 +33,7 @@ const ModernEcommerceHero: React.FC = () => {
   );
 
   const [featuredProduct, setFeaturedProduct] = useState<Product | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const isEnglish = locale === "en";
 
@@ -41,11 +42,17 @@ const ModernEcommerceHero: React.FC = () => {
     dispatch(loadCart());
   }, [dispatch]);
 
+  // Mobile menu toggle
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   // Link için handler (MouseEvent<HTMLAnchorElement>)
   const handleBestSellersLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>
   ) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false); // Mobile menu'yu kapat
 
     setTimeout(() => {
       const element = document.getElementById("featured");
@@ -94,6 +101,10 @@ const ModernEcommerceHero: React.FC = () => {
     window.location.href = "/cart";
   };
 
+  const handleMobileLinkClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   useEffect(() => {
     const fetchFeaturedProduct = async () => {
       try {
@@ -138,11 +149,18 @@ const ModernEcommerceHero: React.FC = () => {
         ))}
       </div>
 
-      {/* Navbar */}
-      <nav className="relative z-20 bg-white/80 backdrop-blur-sm px-6 py-4 shadow-sm">
+      {/* Responsive Navbar */}
+      <nav className="relative z-20 bg-white/80 backdrop-blur-sm px-4 sm:px-6 py-4 shadow-sm">
         <div className="flex items-center justify-between max-w-7xl mx-auto">
-          {/* Left - Navigation Links */}
-          <div className="flex gap-6 text-gray-700 font-medium">
+          {/* Logo - Always visible */}
+          <div className="flex-shrink-0">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+              ModernStore
+            </h1>
+          </div>
+
+          {/* Desktop Navigation - Hidden on mobile */}
+          <div className="hidden lg:flex gap-6 text-gray-700 font-medium">
             <Link
               href="/shop"
               className="hover:text-blue-600 transition-colors"
@@ -164,19 +182,12 @@ const ModernEcommerceHero: React.FC = () => {
             </Link>
           </div>
 
-          {/* Center - Logo/Title */}
-          <div className="absolute left-1/2 transform -translate-x-1/2">
-            <h1 className="text-4xl font-bold tracking-wider bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              ModernStore
-            </h1>
-          </div>
-
-          {/* Right - Language Switcher and Icons */}
-          <div className="flex items-center gap-4">
-            {/* Language Switcher */}
-            <div className="flex items-center gap-2">
+          {/* Right side - Icons and Language Switcher */}
+          <div className="flex items-center gap-2 sm:gap-4">
+            {/* Language Switcher - Responsive */}
+            <div className="flex items-center gap-1 sm:gap-2">
               <span
-                className={`text-sm font-medium ${
+                className={`text-xs sm:text-sm font-medium ${
                   !isEnglish ? "text-gray-900" : "text-gray-500"
                 }`}
               >
@@ -185,16 +196,18 @@ const ModernEcommerceHero: React.FC = () => {
               <Link
                 href="/"
                 locale={isEnglish ? "tr" : "en"}
-                className="relative w-12 h-6 bg-gray-200 rounded-full transition-colors hover:bg-gray-300 block"
+                className="relative w-10 sm:w-12 h-5 sm:h-6 bg-gray-200 rounded-full transition-colors hover:bg-gray-300 block"
               >
                 <div
-                  className={`absolute top-0.5 w-5 h-5 bg-blue-600 rounded-full shadow transition-transform ${
-                    isEnglish ? "translate-x-6" : "translate-x-0.5"
+                  className={`absolute top-0.5 w-4 sm:w-5 h-4 sm:h-5 bg-blue-600 rounded-full shadow transition-transform ${
+                    isEnglish
+                      ? "translate-x-5 sm:translate-x-6"
+                      : "translate-x-0.5"
                   }`}
                 />
               </Link>
               <span
-                className={`text-sm font-medium ${
+                className={`text-xs sm:text-sm font-medium ${
                   isEnglish ? "text-gray-900" : "text-gray-500"
                 }`}
               >
@@ -202,8 +215,8 @@ const ModernEcommerceHero: React.FC = () => {
               </span>
             </div>
 
-            {/* Icons */}
-            <div className="flex items-center gap-3">
+            {/* Desktop Icons */}
+            <div className="hidden sm:flex items-center gap-3">
               <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
                 <svg
                   className="w-5 h-5 text-gray-600"
@@ -217,64 +230,141 @@ const ModernEcommerceHero: React.FC = () => {
                   />
                 </svg>
               </div>
+            </div>
 
-              {/* Cart Icon with Badge */}
-              <div
-                className="relative w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
-                onClick={handleCartClick}
+            {/* Cart Icon - Always visible */}
+            <div
+              className="relative w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+              onClick={handleCartClick}
+            >
+              <svg
+                className="w-5 h-5 text-gray-600"
+                fill="currentColor"
+                viewBox="0 0 20 20"
               >
-                <svg
-                  className="w-5 h-5 text-gray-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
-                </svg>
-                {cartQuantity > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                    {cartQuantity}
-                  </span>
+                <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
+              </svg>
+              {cartQuantity > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                  {cartQuantity}
+                </span>
+              )}
+            </div>
+
+            {/* Mobile Menu Button - Only visible on mobile/tablet */}
+            <button
+              onClick={toggleMobileMenu}
+              className="lg:hidden w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-5 h-5 text-gray-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                {isMobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu - Dropdown */}
+        {isMobileMenuOpen && (
+          <div className="lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg border-t border-gray-200">
+            <div className="flex flex-col p-4 space-y-4">
+              <Link
+                href="/shop"
+                onClick={handleMobileLinkClick}
+                className="text-gray-700 font-medium hover:text-blue-600 transition-colors py-2"
+              >
+                {t("Navigation.shop")}
+              </Link>
+              <Link
+                href="/#featured"
+                onClick={handleBestSellersLinkClick}
+                className="text-gray-700 font-medium hover:text-blue-600 transition-colors py-2"
+              >
+                {t("Navigation.bestsellers")}
+              </Link>
+              <Link
+                href="/products"
+                onClick={handleMobileLinkClick}
+                className="text-gray-700 font-medium hover:text-blue-600 transition-colors py-2"
+              >
+                {t("Navigation.products")}
+              </Link>
+
+              {/* Mobile User Icon */}
+              <div className="sm:hidden flex items-center gap-3 pt-2 border-t border-gray-200">
+                <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer hover:bg-gray-200 transition-colors">
+                  <svg
+                    className="w-5 h-5 text-gray-600"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <span className="text-gray-600 text-sm">Profile</span>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* Hero Content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-8">
+      <div className="relative z-10 min-h-screen flex items-center justify-center p-4 sm:p-8">
         <div className="max-w-7xl w-full mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left side - Content */}
-            <div className="space-y-8">
+            <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
               <div className="space-y-4">
-                <h2 className="text-6xl font-bold leading-tight text-gray-900">
+                <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight text-gray-900">
                   {t("HomePage.title")}
                 </h2>
-                <div className="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full"></div>
+                <div className="h-1 w-16 sm:w-24 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mx-auto lg:mx-0"></div>
               </div>
 
-              <p className="text-xl text-gray-600 leading-relaxed">
+              <p className="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 {t("HomePage.description")}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
                   onClick={() => (window.location.href = "/products")}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+                  className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
                 >
                   {t("HomePage.shopNow")}
                 </button>
                 <button
                   onClick={handleBestSellersButtonClick}
-                  className="border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all"
+                  className="border-2 border-gray-300 text-gray-700 px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-semibold hover:border-blue-600 hover:text-blue-600 transition-all"
                 >
                   {t("HomePage.exploreCollections")}
                 </button>
               </div>
 
-              {/* Features */}
-              <div className="grid grid-cols-3 gap-6 pt-8">
+              {/* Features - Responsive grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-6 lg:pt-8">
                 <div className="text-center">
                   <div className="w-12 h-12 mx-auto mb-3 bg-blue-100 rounded-lg flex items-center justify-center">
                     <svg
@@ -330,15 +420,15 @@ const ModernEcommerceHero: React.FC = () => {
             </div>
 
             {/* Right side - Featured Product */}
-            <div className="relative">
-              <div className="relative bg-white rounded-2xl shadow-2xl p-8 transform rotate-3 hover:rotate-0 transition-transform duration-500">
+            <div className="relative mt-8 lg:mt-0">
+              <div className="relative bg-white rounded-2xl shadow-2xl p-6 sm:p-8 transform hover:rotate-0 lg:rotate-3 transition-transform duration-500">
                 {/* Decorative elements */}
                 <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg transform rotate-45"></div>
                 <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-gradient-to-br from-green-500 to-blue-500 rounded-full"></div>
 
                 {featuredProduct ? (
-                  <div className="space-y-6">
-                    <div className="relative h-64 bg-gray-50 rounded-xl overflow-hidden">
+                  <div className="space-y-4 sm:space-y-6">
+                    <div className="relative h-48 sm:h-64 bg-gray-50 rounded-xl overflow-hidden">
                       <SafeImage
                         src={featuredProduct.image}
                         alt={featuredProduct.title}
@@ -347,25 +437,25 @@ const ModernEcommerceHero: React.FC = () => {
                         className="object-contain p-4"
                         sizes="(max-width: 768px) 100vw, 50vw"
                       />
-                      <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      <div className="absolute top-4 right-4 bg-green-500 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-semibold">
                         ⭐ {featuredProduct.rating.rate}
                       </div>
                     </div>
 
                     <div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">
+                      <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">
                         {t("HomePage.featuredProduct")}
                       </h3>
                       <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                         {featuredProduct.title}
                       </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-bold text-blue-600">
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <span className="text-xl sm:text-2xl font-bold text-blue-600">
                           ${featuredProduct.price}
                         </span>
                         <button
                           onClick={() => handleAddToCart(featuredProduct)}
-                          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
+                          className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 sm:px-6 py-2 rounded-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all"
                         >
                           {t("HomePage.buyNow")}
                         </button>
@@ -373,7 +463,7 @@ const ModernEcommerceHero: React.FC = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="h-64 flex items-center justify-center">
+                  <div className="h-48 sm:h-64 flex items-center justify-center">
                     <div className="animate-pulse text-gray-500">
                       {t("HomePage.loadingProduct")}
                     </div>
